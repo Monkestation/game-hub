@@ -101,9 +101,10 @@ export function formatNumberWithSign(num: number): string {
 export function formatRoundDuration(
   start_datetime: Date,
   end_datetime?: Date | null
-): string {
-  const startTime = new Date(start_datetime).getTime();
-  const endTime = end_datetime ? new Date(end_datetime).getTime() : Date.now();
+): string | null {
+  if (!end_datetime) return null
+  const startTime = start_datetime.getTime();
+  const endTime = end_datetime ? end_datetime.getTime() : Date.now();
   const durationMs = endTime - startTime;
 
   const hours = Math.floor(durationMs / (1000 * 60 * 60));

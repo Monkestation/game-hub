@@ -67,7 +67,7 @@ export interface SS13Round {
   shuttle_name: string | null;
   map_name: string | null;
   station_name: string;
-  duration: string;
+  duration: string | null;
   // added on by our client
   status: 'Ongoing' | 'Completed' | string;
   status_note?: string;

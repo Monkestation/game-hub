@@ -15,7 +15,12 @@ import {
 import Link from "next/link";
 import { fetchSS13ServerRounds } from "@/lib/api/client/servers";
 import { ServerData, SS13Round } from "../../types/server";
-import { calculateTotalPages, formatDate, getStatusColor } from "@/lib/utils";
+import {
+  calculateTotalPages,
+  formatDate,
+  formatRoundDuration,
+  getStatusColor,
+} from "@/lib/utils";
 
 interface RoundHistoryProps {
   server: ServerData;
@@ -98,7 +103,6 @@ const PaginationControls = ({
 };
 
 const RoundHistory = ({ server }: RoundHistoryProps) => {
-  
   const [rounds, setRounds] = useState<SS13Round[]>([]);
   const [totalRounds, setTotalRounds] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -133,6 +137,11 @@ const RoundHistory = ({ server }: RoundHistoryProps) => {
         ) {
           updatedRound.status = "Completed";
         }
+
+        updatedRound.duration = formatRoundDuration(
+          updatedRound.start_datetime || updatedRound.initialize_datetime,
+          updatedRound.end_datetime || updatedRound.shutdown_datetime
+        );
 
         if (!updatedRound.status) {
           if (updatedRound.initialize_datetime) {
@@ -241,11 +250,12 @@ const RoundHistory = ({ server }: RoundHistoryProps) => {
                         tooltip={round.status_note}
                         className={`${getStatusColor(round.status)}`}
                       >
-                        {round.status || "Unknown"} {round.status_note ? (
-                            <Info size={12} className="text-primary ml-1" />
-                          ) : (
-                            ""
-                          )}
+                        {round.status || "Unknown"}{" "}
+                        {round.status_note ? (
+                          <Info size={12} className="text-primary ml-1" />
+                        ) : (
+                          ""
+                        )}
                       </Badge>
                     </td>
                     <td className="px-4 py-3 text-gray-300">

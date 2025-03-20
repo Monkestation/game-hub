@@ -23,7 +23,7 @@ import {
   fetchSS13ServerRoundsAroundSpecificRoundID,
 } from "@/lib/api/client/servers";
 import { ServerData, SS13Round, SS13Rounds } from "@/types/server";
-import { formatDate } from "../../../../../lib/utils";
+import { formatDate, formatRoundDuration } from "../../../../../lib/utils";
 
 interface RoundDetailPageProps {
   params: Promise<{
@@ -36,7 +36,7 @@ export default function RoundDetailPage({ params }: RoundDetailPageProps) {
   const { serverId, roundId } = React.use(params);
   const [round, setRound] = useState<SS13Round | null>(null);
   const [server, setServer] = useState<ServerData | null>(null);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -48,8 +48,11 @@ export default function RoundDetailPage({ params }: RoundDetailPageProps) {
       try {
         setServer(await fetchServer(serverId));
         const roundResponse = await fetchSS13ServerRound(serverId, roundId);
-        // wish i could just asser round as NOT NULL in this context but i think im too dumb to figure that out.
-        // so expect a lot of `roundResponse`
+
+        roundResponse.duration = formatRoundDuration(
+          roundResponse.start_datetime || roundResponse.initialize_datetime,
+          roundResponse.end_datetime || roundResponse.shutdown_datetime
+        );
 
         const surroundingRounds =
           await fetchSS13ServerRoundsAroundSpecificRoundID(
@@ -179,7 +182,9 @@ export default function RoundDetailPage({ params }: RoundDetailPageProps) {
       <div className="flex items-center justify-between mb-8">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold text-white">${server?.name} - Round #{round.id}</h1>
+            <h1 className="text-3xl font-bold text-white">
+              {server?.name} - Round #{round.id}
+            </h1>
             <Badge
               className={
                 round.status === "Ongoing" ? "bg-green-600" : "bg-gray-600"
@@ -189,7 +194,8 @@ export default function RoundDetailPage({ params }: RoundDetailPageProps) {
             </Badge>
           </div>
           <p className="text-gray-400 mt-2">
-            {round.map_name}{round.station_name ? ` •  ${round.station_name}` : ""}
+            {round.map_name}
+            {round.station_name ? ` •  ${round.station_name}` : ""}
           </p>
         </div>
 

@@ -122,10 +122,12 @@ const ServerCard = ({ server }: ServerCardProps) => {
             )}
 
             <div className="mt-auto pt-3">
-              <Button className="w-full bg-primary hover:bg-primary/80 flex items-center justify-center gap-2">
-                <span>Connect</span>
-                <ExternalLink href={`/connect/${server.id}`} size={14} />
-              </Button>
+              <Link href={`/connect/${server.id}`}>
+                <Button className="w-full bg-primary hover:bg-primary/80 flex items-center justify-center gap-2">
+                  <span>Connect</span>
+                  <ExternalLink size={14} />
+                </Button>
+              </Link>
             </div>
           </div>
         </CardContent>
