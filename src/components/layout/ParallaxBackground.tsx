@@ -1,3 +1,4 @@
+// Parallax background ported from https://github.com/AffectedArc07/SS13WebMap/tree/archived
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 
