@@ -11,6 +11,7 @@ Mock API's will eventually be provided for those looking to help contribute to t
 
 - [ ] Fix multple repeated API querys, likely through the use of caching server side. (Actually yes, should do that)
 - [ ] Fix this shit code.
+- [ ] Github link to repo at the bottom and github link at the top for the org
 
 
 # Setting up
