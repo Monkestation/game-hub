@@ -29,7 +29,7 @@ export default async function handler(
 
     return res.status(200).json({ servers: serversCache });
   } catch (error) {
-    console.error("Error fetching servers:", error, (error as any).response.data);
+    console.error("Error fetching servers:", error, (error as {response:{data:string}}).response.data);
 
     if (serversCache.length > 0) {
       return res.status(200).json({

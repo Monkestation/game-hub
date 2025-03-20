@@ -69,7 +69,7 @@ export interface SS13Round {
   station_name: string;
   duration: string;
   // added on by our client
-  status: string;
+  status: 'Ongoing' | 'Completed' | string;
   status_note?: string;
 }
 
@@ -146,4 +146,25 @@ export enum ByondGameState {
   GAME_STATE_PLAYING = 3,
   // Game has round finished
   GAME_STATE_FINISHED = 4,
+}
+
+export enum ByondSecurityLevel {
+  GREEN = "green",
+  BLUE = "blue",
+  RED = "red",
+  DELTA = "delta",
+}
+
+export enum SS13ShuttleMode {
+  SHUTTLE_IDLE = "idle",
+  SHUTTLE_IGNITING = "igniting",
+  SHUTTLE_RECALL = "recalled",
+  SHUTTLE_CALL = "called",
+  SHUTTLE_DOCKED = "docked",
+  SHUTTLE_STRANDED = "stranded",
+  SHUTTLE_DISABLED = "disabled",
+  SHUTTLE_ESCAPE = "escape",
+  SHUTTLE_ENDGAME = "endgame: game over",
+  SHUTTLE_RECHARGING = "recharging",
+  SHUTTLE_PREARRIVAL = "landing",
 }

@@ -5,14 +5,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Clock, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import {
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+  Info,
+} from "lucide-react";
 import Link from "next/link";
 import { fetchSS13ServerRounds } from "@/lib/api/client/servers";
-import { SS13Round } from "../../types/server";
-import { calculateTotalPages, formatDate } from "@/lib/utils";
+import { ServerData, SS13Round } from "../../types/server";
+import { calculateTotalPages, formatDate, getStatusColor } from "@/lib/utils";
 
 interface RoundHistoryProps {
-  serverId: string;
+  server: ServerData;
 }
 
 interface PaginationControlsProps {
@@ -91,7 +97,8 @@ const PaginationControls = ({
   );
 };
 
-const RoundHistory = ({ serverId }: RoundHistoryProps) => {
+const RoundHistory = ({ server }: RoundHistoryProps) => {
+  
   const [rounds, setRounds] = useState<SS13Round[]>([]);
   const [totalRounds, setTotalRounds] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -106,14 +113,16 @@ const RoundHistory = ({ serverId }: RoundHistoryProps) => {
 
     try {
       const serverRoundsResponse = await fetchSS13ServerRounds(
-        serverId,
+        server.id,
         itemsPerPage,
         page * itemsPerPage - 1
       );
       const roundsList = serverRoundsResponse.rounds;
       setTotalRounds(serverRoundsResponse.total);
 
-      setTotalPages(calculateTotalPages(serverRoundsResponse.total, itemsPerPage));
+      setTotalPages(
+        calculateTotalPages(serverRoundsResponse.total, itemsPerPage)
+      );
 
       const updatedRoundsList = roundsList.map((round, index, array) => {
         const updatedRound = { ...round };
@@ -142,6 +151,8 @@ const RoundHistory = ({ serverId }: RoundHistoryProps) => {
             }
           } else {
             updatedRound.status = "Fuck?";
+            updatedRound.status_note =
+              "There was no initialization time for this round.";
           }
         }
 
@@ -172,12 +183,12 @@ const RoundHistory = ({ serverId }: RoundHistoryProps) => {
         <CardTitle className="text-xl text-white">Recent Rounds</CardTitle>
       </CardHeader>
       <PaginationControls
-          itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage}
-          page={page}
-          setPage={setPage}
-          totalPages={totalPages}
-        />
+        itemsPerPage={itemsPerPage}
+        setItemsPerPage={setItemsPerPage}
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+      />
       <CardContent className="p-0">
         <div className="relative overflow-x-auto">
           {loading ? (
@@ -228,30 +239,32 @@ const RoundHistory = ({ serverId }: RoundHistoryProps) => {
                     <td className="px-4 py-3">
                       <Badge
                         tooltip={round.status_note}
-                        className={
-                          round.status === "Ongoing"
-                            ? "bg-green-600"
-                            : "bg-gray-600"
-                        }
+                        className={`${getStatusColor(round.status)}`}
                       >
-                        {round.status || "Unknown"}
+                        {round.status || "Unknown"} {round.status_note ? (
+                            <Info size={12} className="text-primary ml-1" />
+                          ) : (
+                            ""
+                          )}
                       </Badge>
                     </td>
                     <td className="px-4 py-3 text-gray-300">
                       {round.map_name || "Unknown"}
                     </td>
                     <td className="px-4 py-3 text-gray-300">
-                      {formatDate(round.start_datetime || round.initialize_datetime) || "Unknown"}
+                      {formatDate(
+                        round.start_datetime || round.initialize_datetime
+                      ) || "Unknown"}
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex items-center gap-1 text-gray-300">
+                      <div className="flex items-center gap-2 text-gray-300">
                         <Clock size={14} className="text-primary" />
-                        <span>{round.duration}</span>
+                        <span>{round.duration || "Could not determine"}</span>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-right">
                       <Link
-                        href={`/servers/${serverId}/rounds/${round.id}`}
+                        href={`/servers/${server.id}/rounds/${round.id}`}
                         className="text-primary text-sm flex items-center gap-1 hover:underline justify-end"
                       >
                         Details

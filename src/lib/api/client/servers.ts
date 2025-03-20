@@ -36,8 +36,8 @@ export const fetchServer = async (
     );
     return response.data;
   } catch (error) {
-    if ((error as any).response.status === 404) {
-      return null
+    if ((error as { response: { status: number } }).response.status === 404) {
+      return null;
     } else {
       console.error("Error fetching server:", error);
       throw error;
@@ -174,6 +174,7 @@ export const fetchSS13ServerRoundsAroundSpecificRoundID = async (
 
 
 // OVERCOMPLICATION!!!
+// @ts-expect-error euahdsfuhas i swear im trying
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const parseDateKeys = <T extends Record<string, any>>(round: T): T => {
   const dateFields = [

@@ -22,7 +22,7 @@ import RoundHistory from './RoundHistory';
 import { ServerData, ServerStatusRaw } from '../../types/server';
 import { fetchServerStatus } from '../../lib/api/client/servers';
 
-const ServerDetail = ({ server }: { server: ServerData}) => {
+const ServerDetail = ({ server }: { server: ServerData }) => {
   const [serverStatus, setServerStatus] = useState<ServerStatusRaw | null>(null)
   useEffect(() => {
     const setTHEServerStatus = async () => {
@@ -204,7 +204,7 @@ const ServerDetail = ({ server }: { server: ServerData}) => {
 
       {/* Round History - Only for SS13 servers */}
       {isSS13 && (
-        <RoundHistory serverId={server.id} />
+        <RoundHistory server={server} />
       )}
     </div>
   );

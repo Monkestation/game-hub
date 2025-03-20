@@ -56,10 +56,12 @@ export function formatGameState(state: ByondGameState | undefined): string {
 /**
  * Get the appropriate color for server status
  */
-export function getStatusColor(status?: 'alive' | 'degraded' | 'down'): string {
+export function getStatusColor(status?: 'alive' | 'degraded' | 'down' | 'Ongoing' | 'Completed' | string): string {
   switch (status) {
     case 'alive':
-      return 'bg-green-500';
+    case 'Completed':
+    return 'bg-green-500';
+    case 'Ongoing':
     case 'degraded':
       return 'bg-yellow-500';
     case 'down':
