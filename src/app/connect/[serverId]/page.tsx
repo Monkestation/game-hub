@@ -67,7 +67,10 @@ export default function ConnectPage({ params }: ConnectServerProps) {
   };
 
   const handleCopy = () => {
-    const address = server.game.port === 25565 ? server.game.host : `${server.game.host}:${server.game.port}`;
+    const address =
+      server.game.port === 25565
+        ? server.game.host
+        : `${server.game.host}:${server.game.port}`;
     navigator.clipboard.writeText(address);
     toast.success("Address copied to clipboard!");
   };
@@ -95,11 +98,19 @@ export default function ConnectPage({ params }: ConnectServerProps) {
             </p>
             <div className="bg-gray-800 p-3 rounded text-white inline-flex items-center gap-2 mt-2">
               {server.game.host}:{server.game.port}
+              <Button
+                className="bg-primary hover:bg-primary/80 flex items-center gap-2  mx-auto"
+                onClick={handleCopy}
+              >
+                <Copy size={12} />
+              </Button>
             </div>
           </>
         ) : server.type === "minecraft" || server.type === "terraria" ? (
           <>
-            <p className="text-gray-400 mb-4">Join using the following address:</p>
+            <p className="text-gray-400 mb-4">
+              Join using the following address:
+            </p>
             <div className="bg-gray-800 p-3 rounded text-white inline-flex items-center gap-2 mb-4">
               {server.game.host}:{server.game.port}
             </div>
@@ -107,7 +118,7 @@ export default function ConnectPage({ params }: ConnectServerProps) {
               className="bg-primary hover:bg-primary/80 flex items-center gap-2 mx-auto"
               onClick={handleCopy}
             >
-              <Copy size={18} />
+              <Copy size={12} />
               Copy Address
             </Button>
           </>
@@ -124,7 +135,9 @@ export default function ConnectPage({ params }: ConnectServerProps) {
       </div>
       <div className="mt-6">
         <Button className="bg-gray-600 hover:bg-gray-500">
-          <Link href="/" className="text-white">Return Home</Link>
+          <Link href="/" className="text-white">
+            Return Home
+          </Link>
         </Button>
       </div>
     </div>
