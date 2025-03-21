@@ -12,7 +12,7 @@ Mock API's will eventually be provided for those looking to help contribute to t
 - [ ] Fix multple repeated API querys, likely through the use of caching server side. (Actually yes, should do that)
 - [ ] Fix this shit code.
 - [ ] Github link to repo at the bottom and github link at the top for the org
-
+- [ ] For image lookup I could technically just make a component that wraps an image and asyncronously determines the extension of a file for a key.
 
 # Setting up
 
