@@ -1,0 +1,108 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@font-face {
+  font-family: 'Comic-Sans';
+  src: url("/fonts/comic-sans.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  :root {
+    --background: #0a0a0f;
+    --foreground: #fafafa;
+
+    --card: #0f0f19;
+    --card-foreground: #fafafa;
+
+    --popover: #0f0f19;
+    --popover-foreground: #fafafa;
+
+    --primary: #ea3c3c;
+    --primary-foreground: #fafafa;
+
+    --secondary: #16161f;
+    --secondary-foreground: #fafafa;
+
+    --muted: #3b3b50;
+    --muted-foreground: #a3a3c1;
+
+    --accent: #ff9292;
+    --accent-foreground: #fafafa;
+
+    --destructive: #781b1b;
+    --destructive-foreground: #fafafa;
+
+    --border: #ffffff;
+    --input: #404040;
+    --ring: #a72d2d;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    /* font-family: 'Comic-Sans', cursive; */
+    /* Use the defined font-family */
+    background-image: url('/images/space-bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+  h1 {
+    color: var(--accent);
+    font-size: 1.875rem;
+    /* text-3xl */
+    font-weight: bold;
+    margin: 1rem 0;
+  }
+
+  h2 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    /* text-2xl */
+    font-weight: bold;
+    margin: 0.75rem 0;
+  }
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  a {
+    color: var(--primary);
+    transition: color 0.2s;
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+}
+
+.logo-text {
+  color: #ca1f13;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: bold;
+  /* font-family: 'Comic-Sans', cursive; */
+  /* Use the defined font-family */
+}
+
+.content-panel {
+  background-color: rgba(17, 22, 28, 0.8);
+  border-radius: var(--radius);
+  backdrop-filter: blur(4px);
+}
+
+.sidebar {
+  background-color: rgba(17, 22, 28, 0.85);
+  border-right: 1px solid var(--border);
+}

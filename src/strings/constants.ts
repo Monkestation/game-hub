@@ -1,0 +1,16 @@
+export const MonkeMaps = [
+  "Blueshift",
+  "BoxStation",
+  "DeltaStation",
+  "HelioStation",
+  "IceBoxStation",
+  "KiloStation",
+  "LeadPoisoningStation",
+  "MetaStation",
+  "NebulaStation",
+  "Oshan",
+  "Ouroboros",
+  "Theseus",
+  "TramStation",
+  "Voidraptor",
+];
