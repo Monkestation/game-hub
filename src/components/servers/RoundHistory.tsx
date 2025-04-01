@@ -119,7 +119,7 @@ const RoundHistory = ({ server }: RoundHistoryProps) => {
       const serverRoundsResponse = await fetchSS13ServerRounds(
         server.id,
         itemsPerPage,
-        page * itemsPerPage - 1
+        (page - 1) * itemsPerPage - 1
       );
       const roundsList = serverRoundsResponse.rounds;
       setTotalRounds(serverRoundsResponse.total);
