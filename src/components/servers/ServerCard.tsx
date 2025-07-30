@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Users, MapPin, Clock, ExternalLink } from "lucide-react";
-import { ServerData, ServerStatusRaw } from "@/types/server";
+import type { ServerData, ServerStatusRaw } from "@/types/server";
 import {
   formatDuration,
   formatGameState,
@@ -122,12 +122,12 @@ const ServerCard = ({ server }: ServerCardProps) => {
             )}
 
             <div className="mt-auto pt-3">
-              <Button className="w-full bg-primary hover:bg-primary/80 flex items-center justify-center gap-2">
-                <Link href={`/connect/${server.id}`}>
+              <Link href={`/connect/${server.id}`}>
+                <Button className="w-full bg-primary hover:bg-primary/80 flex items-center justify-center gap-2">
                   <span>Connect</span>
                   <ExternalLink size={14} />
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
           </div>
         </CardContent>

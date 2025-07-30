@@ -105,6 +105,18 @@ export const refreshServersData = async (): Promise<ServerData[]> => {
   }
 };
 
+export const fetchPlayerCountData = async (
+  serverId: string,
+  options: {
+    period: "hour" | "day" | "week" | "month" | "year"
+  } | {
+    startDate: Date,
+    endDate: Date, 
+  }
+) {
+  const response = await apiClientNext.get<
+}
+
 // SS13 Only
 export const fetchSS13ServerRounds = async (
   serverId: string,

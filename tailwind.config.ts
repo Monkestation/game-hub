@@ -8,6 +8,12 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "bg-green-500",
+    "bg-red-500",
+    "bg-yellow-500",
+    "bg-gray-500",
+  ],
   theme: {
     // Honestly don't know why tailwind has a config like this for extending it. why cant i just have a css file for it?
     extend: {

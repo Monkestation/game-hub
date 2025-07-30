@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { SS13Rounds } from "@/types/server";
+import type { SS13Rounds } from "@/types/server";
 import plexoraApiClient from "@/lib/api/server/apiClient";
 
 export default async function handler(

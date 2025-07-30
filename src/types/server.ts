@@ -26,7 +26,7 @@ export interface ServerData {
   shortDescription?: string;
   description?: string;
   featured?: boolean;
-  imageKey?: string;
+  imageKey?: string | string[];
   iconKey?: string;
   game: {
     host: string;

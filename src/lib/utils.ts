@@ -7,12 +7,15 @@ import stationSuffixes from "@/strings/station_suffixes.json";
 import greekLetters from "@/strings/greek_letters.json";
 import phoneticAlphabet from "@/strings/phonetic_alphabet.json";
 
+export function fakeDelay(time: number) {
+  return new Promise<void>((resolve) => setTimeout(resolve, time));
+}
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function imageLookup(key?: string): string {
-  return `/images/keys/${key || "unknown"}.png`;
+export function imageLookup(key?: string | string[]): string {
+  return `/images/keys/${Array.isArray(key) ? getRandomElement(key) : key || "unknown"}.png`;
 }
 
 export function formatDuration(seconds: number): string {
@@ -110,7 +113,7 @@ export function getRandomElement<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-export function intToWords(number: number, carriedString: string = "", capitalize: boolean = false): string {
+export function intToWords(number: number, carriedString = "", capitalize = false): string {
   const tens = [
     "",
     "twenty",

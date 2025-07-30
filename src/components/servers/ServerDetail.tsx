@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { formatDuration, formatGameState, getStatusColor, getStatusText, imageLookup } from '@/lib/utils';
 import RoundHistory from './RoundHistory';
-import { ServerData, ServerStatusRaw } from '../../types/server';
+import type { ServerData, ServerStatusRaw } from '../../types/server';
 import { fetchServerStatus } from '../../lib/api/client/servers';
 
 const ServerDetail = ({ server }: { server: ServerData }) => {
@@ -46,7 +46,7 @@ const ServerDetail = ({ server }: { server: ServerData }) => {
             className="brightness-75"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000000aa] via-black/10 to-transparent" />
 
           <div className="absolute inset-0 flex flex-col justify-end p-6">
             <div className="flex items-center gap-3 mb-2">
@@ -90,7 +90,7 @@ const ServerDetail = ({ server }: { server: ServerData }) => {
               <Info size={20} className="text-primary" />
               About this server
             </h2>
-            <p className="text-gray-300" dangerouslySetInnerHTML={{__html: server.description?.replaceAll("\n", "<br>") || "No description"}}></p>
+            <p className="text-gray-300" dangerouslySetInnerHTML={{__html: server.description?.replaceAll("\n", "<br>") || "No description"}} />
 
             {serverStatus?.simple.status === 'down' && serverStatus?.simple.message && (
               <div className="mt-4 p-4 bg-red-950/50 border border-red-800 rounded-md">
@@ -188,15 +188,6 @@ const ServerDetail = ({ server }: { server: ServerData }) => {
                 </div>
               )}
 
-              {serverStatus?.status?.obj.version && (
-                <div className="flex justify-between items-center pb-2">
-                  <span className="flex items-center gap-2 text-gray-400">
-                    <Code size={16} className="text-primary" />
-                    <span>Version</span>
-                  </span>
-                  <span className="text-white font-medium">{serverStatus?.status?.obj.version}</span>
-                </div>
-              )}
             </div>
           </CardContent>
         </Card>

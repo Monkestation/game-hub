@@ -44,7 +44,7 @@ const PaginationControls = ({
   const handleItemsPerPageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setItemsPerPage(parseInt(event.target.value));
+    setItemsPerPage(Number.parseInt(event.target.value));
   };
 
   const handlePrevPage = () => {
@@ -119,7 +119,7 @@ const RoundHistory = ({ server }: RoundHistoryProps) => {
       const serverRoundsResponse = await fetchSS13ServerRounds(
         server.id,
         itemsPerPage,
-        page * itemsPerPage - 1
+        (page - 1) * itemsPerPage
       );
       const roundsList = serverRoundsResponse.rounds;
       setTotalRounds(serverRoundsResponse.total);
@@ -153,10 +153,12 @@ const RoundHistory = ({ server }: RoundHistoryProps) => {
 
             if (diffInHours > 24) {
               updatedRound.status = "Completed";
-              updatedRound.status_note = "The difference between now and the start of the round is greater than 24 hours.\nSo we have REASONABLE assumption that the round is over by now.";
+              updatedRound.status_note =
+                "The difference between now and the start of the round is greater than 24 hours.\nSo we have REASONABLE assumption that the round is over by now.";
             } else if (index > 0) {
               updatedRound.status = "Completed";
-              updatedRound.status_note = "There's no end time for this round but a new round has started,\nnso it's with reasonable assumption the round has ended";
+              updatedRound.status_note =
+                "There's no end time for this round but a new round has started,\nnso it's with reasonable assumption the round has ended";
             }
           } else {
             updatedRound.status = "Unknown";
@@ -200,20 +202,7 @@ const RoundHistory = ({ server }: RoundHistoryProps) => {
       />
       <CardContent className="p-0">
         <div className="relative overflow-x-auto">
-          {loading ? (
-            <div className="p-6 space-y-4">
-              <Skeleton className="h-14 w-full bg-gray-800/50" />
-              <Skeleton className="h-14 w-full bg-gray-800/50" />
-              <Skeleton className="h-14 w-full bg-gray-800/50" />
-              <Skeleton className="h-14 w-full bg-gray-800/50" />
-              <Skeleton className="h-14 w-full bg-gray-800/50" />
-            </div>
-          ) : error ? (
-            <div className="p-6 text-center">
-              <p className="text-red-400">{error}</p>
-            </div>
-          ) : (
-            <table className="w-full text-left">
+          <table className="w-full text-left">
               <thead className="text-xs text-gray-400 uppercase bg-black/40 border-b border-gray-800">
                 <tr>
                   <th scope="col" className="px-4 py-3">
@@ -237,7 +226,7 @@ const RoundHistory = ({ server }: RoundHistoryProps) => {
                 </tr>
               </thead>
               <tbody>
-                {rounds.map((round) => (
+                {loading ? undefined : rounds.map((round) => (
                   <tr
                     key={round.id}
                     className="border-b border-gray-800 hover:bg-black/60 transition-colors"
@@ -285,7 +274,22 @@ const RoundHistory = ({ server }: RoundHistoryProps) => {
                 ))}
               </tbody>
             </table>
-          )}
+          {
+            loading ? (
+              <div className="p-6 space-y-2">
+              {
+                Array(itemsPerPage).fill(0).map((x,i)=> 
+                   <Skeleton key={i} className="h-[40px] w-full bg-gray-800/50" />
+                )
+              }
+              {/* <Skeleton className="h-14 w-full bg-gray-800/50" />
+              <Skeleton className="h-14 w-full bg-gray-800/50" />
+              <Skeleton className="h-14 w-full bg-gray-800/50" />
+              <Skeleton className="h-14 w-full bg-gray-800/50" />
+              <Skeleton className="h-14 w-full bg-gray-800/50" /> */}
+            </div>
+            ) : undefined
+          }
         </div>
         <PaginationControls
           itemsPerPage={itemsPerPage}
