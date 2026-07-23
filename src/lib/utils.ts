@@ -14,10 +14,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function imageLookup(key?: string | string[]): string {
-  return `/images/keys/${Array.isArray(key) ? getRandomElement(key) : key || "unknown"}.png`;
-}
-
 export function formatDuration(seconds: number): string {
   if (!seconds || seconds <= 0) return "0m";
 

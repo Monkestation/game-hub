@@ -1,26 +1,26 @@
+/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <explanation> */
 "use client";
 
-import React, { useEffect, useState, version } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { formatDuration, formatGameState, getRandomElement, getStatusColor, getStatusText } from '@/lib/utils';
 import {
-  Users,
   Clock,
   ExternalLink,
+  History,
   Info,
   MapPin,
   Shield,
   Timer,
-  History,
-  Code
+  Users,
 } from 'lucide-react';
-import { formatDuration, formatGameState, getStatusColor, getStatusText, imageLookup } from '@/lib/utils';
-import RoundHistory from './RoundHistory';
-import type { ServerData, ServerStatusRaw } from '../../types/server';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState, } from 'react';
 import { fetchServerStatus } from '../../lib/api/client/servers';
+import type { ServerData, ServerStatusRaw } from '../../types/server';
+import RoundHistory from './RoundHistory';
 
 const ServerDetail = ({ server }: { server: ServerData }) => {
   const [serverStatus, setServerStatus] = useState<ServerStatusRaw | null>(null)
@@ -39,7 +39,7 @@ const ServerDetail = ({ server }: { server: ServerData }) => {
       <div className="relative overflow-hidden rounded-lg border border-gray-800">
         <div className="relative aspect-video md:aspect-[2.5/1] w-full">
           <Image
-            src={imageLookup(server.imageKey) || '/images/space-bg.png'}
+            src={server.imageUrls?.length ? getRandomElement(server.imageUrls) : "/images/space-bg.png"}
             alt={server.name}
             fill
             style={{ objectFit: 'cover' }}
@@ -50,15 +50,15 @@ const ServerDetail = ({ server }: { server: ServerData }) => {
 
           <div className="absolute inset-0 flex flex-col justify-end p-6">
             <div className="flex items-center gap-3 mb-2">
-              {server.iconKey && (
+              {server.iconUrl ? (
                 <Image
-                  src={imageLookup(server.iconKey)}
+                  src={server.iconUrl || ""}
                   alt={server.name}
                   width={64}
                   height={64}
                   className="rounded"
                 />
-              )}
+              ) : ""}
               <div>
                 <h1 className="text-4xl font-bold text-white">{server.name}</h1>
                 <div className="flex items-center gap-2 mt-1">

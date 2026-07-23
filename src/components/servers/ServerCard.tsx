@@ -11,9 +11,9 @@ import type { ServerData, ServerStatusRaw } from "@/types/server";
 import {
   formatDuration,
   formatGameState,
+  getRandomElement,
   getStatusColor,
   getStatusText,
-  imageLookup,
 } from "@/lib/utils";
 import { fetchServerStatus } from "../../lib/api/client/servers";
 
@@ -38,7 +38,7 @@ const ServerCard = ({ server }: ServerCardProps) => {
       <Card className="overflow-hidden border-0 bg-black/40 hover:bg-black/60 transition-all group h-full flex flex-col">
         <div className="relative w-full h-32">
           <Image
-            src={imageLookup(server.imageKey) || "/images/space-bg.png"}
+            src={server.imageUrls?.length ? getRandomElement(server.imageUrls) : "/images/space-bg.png"}
             alt={server.name}
             fill
             style={{ objectFit: "cover" }}
@@ -48,9 +48,9 @@ const ServerCard = ({ server }: ServerCardProps) => {
 
           <div className="absolute bottom-3 left-4 right-4 flex justify-between items-center">
             <div className="flex items-center gap-2">
-              {server.iconKey && (
+              {server.iconUrl && (
                 <Image
-                  src={imageLookup(server.iconKey)}
+                  src={server.iconUrl}
                   alt={server.name}
                   width={24}
                   height={24}
@@ -80,11 +80,17 @@ const ServerCard = ({ server }: ServerCardProps) => {
               <div className="flex items-center gap-2">
                 <Users size={16} className="text-primary" />
                 <span>
-                  {serverStatus?.status?.obj.players ?? "??"}
-                  {serverStatus?.status?.obj.extreme_popcap
-                    ? `/${serverStatus?.status?.obj.extreme_popcap}`
-                    : ""}{" "}
-                  players
+                  {serverStatus?.simple.status !== "down" ? (
+                    <>
+                      {serverStatus?.status?.obj.players ?? "??"}
+                      {serverStatus?.status?.obj.extreme_popcap
+                        ? `/${serverStatus?.status?.obj.extreme_popcap}`
+                        : ""}{" "}
+                      players
+                    </>
+                  ) : (
+                    "Offline"
+                  )}
                 </span>
               </div>
 
