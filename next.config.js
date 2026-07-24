@@ -5,14 +5,27 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "monkestation.com",
-        port: "",
+        hostname: "**.monkestation.com",
         pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "cdn.discordapp.com",
-        port: "",
+        hostname: "monkestation.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.discordapp.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "discordapp.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "files.catbox.moe",
         pathname: "/**",
       },
     ],
